@@ -83,6 +83,9 @@ than it provided (taken from other users' balances, causing the Victim contract 
 ---------------------------------------------------------------------------------------------------------------->>>
 
 ** Prevention : 
+Now in order to deposit ETH, you must not have smart contract code at your address. 
+However, this is easily defeated with the following Attacker contract:
+
 
 ```
 ## 2. Arithmatic over/underflows
