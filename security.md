@@ -77,8 +77,10 @@ contract Attacker {
       3.) balances[msg.sender] = 0;
     2.) balances[msg.sender] = 0; (it was already 0)
   1.) balances[msg.sender] = 0; (it was already 0)
--------------------------------------------------------------------------------------------------
-
+---------------------------------------------------------------------------------------------------------------->>>
+Calling Attacker.beginAttack with 1 ETH will re-entrancy attack Victim, withdrawing more ETH 
+than it provided (taken from other users' balances, causing the Victim contract to become under-collateralized.
+---------------------------------------------------------------------------------------------------------------->>>
 
 ** Prevention : 
 
