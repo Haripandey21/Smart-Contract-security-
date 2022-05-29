@@ -23,12 +23,16 @@ These categories includes :-
                         An attacker can drain all the money from the smart contract wallet through simple code bugs. Hence, the need 
                         for smart contract audits.
 ```
+
 ## 1. Reentrancy
 ```bash 
 ** info : 
 While the EVM cannot run multiple contracts at the same time, a contract calling a different contract
 pauses the calling contract's execution and memory state until the call returns, 
 at which point execution proceeds normally. This pausing and re-starting can create a vulnerability known as "re-entrancy".
+
+👉👉👉: The external calls can be hijacked by attackers, who can force the contracts to execute further 
+code (through a fallback function), including calls back into themselves. Attacks of this kind were used in the infamous DAO hack.
 
 ** example :
 contract Victim {
