@@ -58,6 +58,23 @@ contract Attacker {
         }
     }
 }
+** Calling Attacker.beginAttack() will start a cycle that looks something like :
+
+0.) Attacker's EOA calls Attacker.beginAttack() with 1 ETH
+0.) Attacker.beginAttack() deposits 1 ETH into Victim
+1.) Attacker -> Victim.withdraw()
+  1.) Victim reads balances[msg.sender]
+  1.) Victim sends ETH to Attacker (which executes default function)
+    2.) Attacker -> Victim.withdraw()
+    2.) Victim reads balances[msg.sender]
+    2.) Victim sends ETH to Attacker (which executes default function)
+      3.) Attacker -> Victim.withdraw()
+      3.) Victim reads balances[msg.sender]
+      3.) Victim sends ETH to Attacker (which executes default function)
+        4.) Attacker no longer has enough gas, returns without calling again
+      3.) balances[msg.sender] = 0;
+    2.) balances[msg.sender] = 0; (it was already 0)
+  1.) balances[msg.sender] = 0; (it was already 0)
 
 
 
