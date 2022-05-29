@@ -45,6 +45,7 @@ contract Victim {
         balances[msg.sender] = 0;
     }
 }
+------------------------------------------------------------------------------------------
 ** Imagine this malicious contract from attackers :
 contract Attacker {
     function beginAttack() external payable {
@@ -58,6 +59,7 @@ contract Attacker {
         }
     }
 }
+---------------------------------------------------------------------------------------------
 ** Calling Attacker.beginAttack() will start a cycle that looks something like :
 
 0.) Attacker's EOA calls Attacker.beginAttack() with 1 ETH
@@ -75,7 +77,7 @@ contract Attacker {
       3.) balances[msg.sender] = 0;
     2.) balances[msg.sender] = 0; (it was already 0)
   1.) balances[msg.sender] = 0; (it was already 0)
-
+-------------------------------------------------------------------------------------------------
 
 
 ** Prevention : 
