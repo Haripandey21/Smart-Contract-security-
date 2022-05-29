@@ -86,7 +86,17 @@ than it provided (taken from other users' balances, causing the Victim contract 
 By simply switching the order of the storage update and external call, 
 we prevent the re-entrancy condition that enabled the attack. Calling back into withdraw,
 while possible, will not benefit the attacker, since the balances storage will already be set to 0.
-
+----------------------->>>>>>>>>>>>
+contract NoLongerAVictim {
+    function withdraw() external {
+        uint256 amount = balances[msg.sender];
+        balances[msg.sender] = 0;
+        (bool success, ) = msg.sender.call.value(amount)("");
+        require(success);
+    }
+}
+The code above follows the "Checks-Effects-Interactions" design pattern, which helps protect against re-entrancy.
+---------------------------------------------------------------------------------------------------------------------
 ```
 ## 2. Arithmatic over/underflows
 ```bash 
