@@ -83,9 +83,9 @@ than it provided (taken from other users' balances, causing the Victim contract 
 ---------------------------------------------------------------------------------------------------------------->>>
 
 ** Prevention : 
-Now in order to deposit ETH, you must not have smart contract code at your address. 
-However, this is easily defeated with the following Attacker contract:
-
+By simply switching the order of the storage update and external call, 
+we prevent the re-entrancy condition that enabled the attack. Calling back into withdraw,
+while possible, will not benefit the attacker, since the balances storage will already be set to 0.
 
 ```
 ## 2. Arithmatic over/underflows
