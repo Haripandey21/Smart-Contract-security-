@@ -1,10 +1,9 @@
-## Overview
+## Overview : 👉👉👉
 ```bash
-OVERVIEW : 
 ** While blockchain technology is gaining traction, there are potential attacks. For instance, there are currently
 emerging DeFi attacks; exchange hacks, among others. However, all blockchain-related attacks are not smart contract attacks.
 Some are defraud, malicious, and weak protocol attacks.
-The Attack Classification ::📑📑📑📑📑📑📑📑
+The Attack Classification ::📑📑📑📑
 
 The attacks on smart contract security and blockchain, in general, can be classified into four basic categories.
 These categories include
