@@ -23,8 +23,9 @@ These categories includes :-
                         An attacker can drain all the money from the smart contract wallet through simple code bugs. Hence, the need 
                         for smart contract audits.
 ```
-
-## 1. Reentrancy
+ Let's Explore different Security risks ===>> 
+ 
+## 1. Reentrancy 🚩🚩🚩
 ```bash 
 ** info : 
 While the EVM cannot run multiple contracts at the same time, a contract calling a different contract
@@ -106,94 +107,94 @@ Any time you are sending ETH to an untrusted address or interacting with an unkn
 of a user-provided token address), you open yourself up to the possibility of re-entrancy. 
 By designing contracts that neither send ETH nor call untrusted contracts, you prevent the possibility of re-entrancy!
 ```
-## 2. Arithmatic over/underflows
+## 2. Arithmatic over/underflows 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 3. Unexpected ethers 
+## 3. Unexpected ethers  🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 4. Delegatecall
+## 4. Delegatecall 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 5. Default Visibilities
+## 5. Default Visibilities 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 6. Entropy Illusion 
+## 6. Entropy Illusion 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 7. External Contract Referencing 
+## 7. External Contract Referencing 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 8. Short Address/Parameters Attack 
+## 8. Short Address/Parameters Attack 🚩🚩🚩 
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 9. Unchecked Call Return Values 
+## 9. Unchecked Call Return Values 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 10. Race conditions/front running 
+## 10. Race conditions/front running 🚩🚩🚩
 ```bash
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 11. DDOS attack 
+## 11. DDOS attack 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 12. Block-timestamp Manipulation 
+## 12. Block-timestamp Manipulation 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 13. Constructors with Care 
+## 13. Constructors with Care 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 14. Uninitialized Storage Pointers 
+## 14. Uninitialized Storage Pointers 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 15. Floating Point and Precision 
+## 15. Floating Point and Precision 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
 ** Prevention : 
 ```
-## 16. Tx.Origin Authentication 
+## 16. Tx.Origin Authentication 🚩🚩🚩
 ```bash 
 ```
-## 17. Contract Libraries  
+## 17. Contract Libraries 🚩🚩🚩
 ```bash 
 ** info : 
 ** example: 
