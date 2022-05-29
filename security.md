@@ -29,7 +29,23 @@ These categories includes :-
 While the EVM cannot run multiple contracts at the same time, a contract calling a different contract
 pauses the calling contract's execution and memory state until the call returns, 
 at which point execution proceeds normally. This pausing and re-starting can create a vulnerability known as "re-entrancy".
-** example: 
+
+** example :
+contract Victim {
+    mapping (address => uint256) public balances;
+
+    function deposit() external payable {
+        balances[msg.sender] += msg.value;
+    }
+
+    function withdraw() external {
+        uint256 amount = balances[msg.sender];
+        (bool success, ) = msg.sender.call.value(amount)("");
+        require(success);
+        balances[msg.sender] = 0;
+    }
+}
+
 ** Prevention : 
 
 ```
