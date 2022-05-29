@@ -97,6 +97,10 @@ contract NoLongerAVictim {
 }
 The code above follows the "Checks-Effects-Interactions" design pattern, which helps protect against re-entrancy.
 ---------------------------------------------------------------------------------------------------------------------
+Method 2 : 
+Any time you are sending ETH to an untrusted address or interacting with an unknown contract (such as calling transfer() 
+of a user-provided token address), you open yourself up to the possibility of re-entrancy. 
+By designing contracts that neither send ETH nor call untrusted contracts, you prevent the possibility of re-entrancy!
 ```
 ## 2. Arithmatic over/underflows
 ```bash 
