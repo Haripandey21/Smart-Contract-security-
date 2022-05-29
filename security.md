@@ -45,6 +45,7 @@ contract Victim {
         balances[msg.sender] = 0;
     }
 }
+Imagine this malicious contract from attackers :
 
 ** Prevention : 
 
