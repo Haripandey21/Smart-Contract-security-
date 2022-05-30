@@ -116,6 +116,7 @@ By designing contracts that neither send ETH nor call untrusted contracts, you p
 ## 3. Unexpected ethers  🚩🚩🚩
 ```bash 
 ** info : 
+ when ether is sent to a contract it must execute either the fallback function or another function defined in the contract. There are two exceptions to this, where ether can exist in a contract without having executed any code. Contracts that rely on code execution for all ether sent to them can be vulnerable to attacks where ether is forcibly sent.
 ** example: 
 ** Prevention : 
 ```
