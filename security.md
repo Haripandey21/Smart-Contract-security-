@@ -117,6 +117,7 @@ By designing contracts that neither send ETH nor call untrusted contracts, you p
 ```bash 
 ** info : 
  when ether is sent to a contract it must execute either the fallback function or another function defined in the contract. There are two exceptions to this, where ether can exist in a contract without having executed any code. Contracts that rely on code execution for all ether sent to them can be vulnerable to attacks where ether is forcibly sent.
+ There are two ways in which ether can (forcibly) be sent to a contract without using a payable function or executing any code on the contract:
 ** example: 
 ** Prevention : 
 ```
