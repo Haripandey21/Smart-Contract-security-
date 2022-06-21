@@ -152,7 +152,66 @@ Note ====>> The attacker could determine the current lockTime for the address th
     Let’s call this userLockTime. They could then call the increaseLockTime function and pass as an argument the number 2^256 - userLockTime. 
     This number would be added to the current userLockTime and cause an overflow, resetting lockTime[msg.sender] to 0.
     The attacker could then simply call the withdraw function to obtain their reward
-** Prevention : 
+** Prevention :-
+technique to guard against under/overflow vulnerabilities is to use or build mathematical libraries that replace 
+the standard math operators addition, subtraction, and multiplication. 
+===>> division does not cause over/underflows 
+OpenZeppelin has done a great job of building and auditing secure libraries for the Ethereum community. 
+In particular, its SafeMath library can be used to avoid under/overflow vulnerabilities.
+
+--------------------  Coding ----------------------------------------------
+library SafeMath {
+ function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+    if (a == 0) {
+      return 0;
+    }
+    uint256 c = a * b;
+    assert(c / a == b);
+    return c;
+  }
+
+  function div(uint256 a, uint256 b) internal pure returns (uint256) {
+    // assert(b > 0); // Solidity automatically throws when dividing by 0
+    uint256 c = a / b;
+    // assert(a == b * c + a % b); // This holds in all cases
+    return c;
+  }
+
+  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+    assert(b <= a);
+    return a - b;
+  }
+
+  function add(uint256 a, uint256 b) internal pure returns (uint256) {
+    uint256 c = a + b;
+    assert(c >= a);
+    return c;
+  }
+}
+
+contract TimeLock {
+    using SafeMath for uint; // use the library for uint type
+    mapping(address => uint256) public balances;
+    mapping(address => uint256) public lockTime;
+
+    function deposit() external payable {
+        balances[msg.sender] = balances[msg.sender].add(msg.value);
+        lockTime[msg.sender] = now.add(1 weeks);
+    }
+
+    function increaseLockTime(uint256 _secondsToIncrease) public {
+        lockTime[msg.sender] = lockTime[msg.sender].add(_secondsToIncrease);
+    }
+
+    function withdraw() public {
+        require(balances[msg.sender] > 0);
+        require(now > lockTime[msg.sender]);
+        uint256 transferValue = balances[msg.sender];
+        balances[msg.sender] = 0;
+        msg.sender.transfer(transferValue);
+    }
+}
+--------------------------------------------------------------------------------------------------------------------------------------------------
 ```
 ## 3. Unexpected ethers  🚩🚩🚩
 ```bash 
