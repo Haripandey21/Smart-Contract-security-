@@ -110,7 +110,48 @@ By designing contracts that neither send ETH nor call untrusted contracts, you p
 ## 2. Arithmatic over/underflows 🚩🚩🚩
 ```bash 
 ** info : 
+EVM specifies fixed-size data types for integers. This means that an integer variable can represent
+only a certain range of numbers. A uint8, for example, can only store numbers in the range [0,255]. Trying to store 256 into a uint8 will result in 0. 
+==>>  If care is not taken, variables in Solidity can be exploited if user input is unchecked and calculations are performed that result
+in numbers that lie outside the range of the data type that stores them. 
+
 ** example: 
+===>> For example, subtracting 1 from a uint8 (unsigned integer of 8 bits; i.e., nonnegative) variable whose value is 0
+      will result in the number 255. This is an underflow.
+====>>Adding numbers larger than the data type’s range is called an overflow. For clarity,
+       adding 257 to a uint8 that currently has a value of 0 will result in the number 1. 
+ ---------------------------CODING--------------------------------------------------------------------
+ contract TimeLock {
+
+    mapping(address => uint) public balances;
+    mapping(address => uint) public lockTime;
+
+    function deposit() public payable {
+        balances[msg.sender] += msg.value;
+        lockTime[msg.sender] = now + 1 weeks;
+    }
+
+    function increaseLockTime(uint _secondsToIncrease) public {
+        lockTime[msg.sender] += _secondsToIncrease;
+    }
+
+    function withdraw() public {
+        require(balances[msg.sender] > 0);
+        require(now > lockTime[msg.sender]);
+        balances[msg.sender] = 0;
+        msg.sender.transfer(balance);
+    }
+} 
+
+
+NOW, Here users can deposit ether into the contract and it will be locked there for at least a week.
+The user may extend the wait time to longer than 1 week if they choose, but once deposited, 
+the user can be sure their ether is locked in safely for at least a week—or so this contract intends.
+
+Note ====>> The attacker could determine the current lockTime for the address they now hold the key for (it’s a public variable). 
+    Let’s call this userLockTime. They could then call the increaseLockTime function and pass as an argument the number 2^256 - userLockTime. 
+    This number would be added to the current userLockTime and cause an overflow, resetting lockTime[msg.sender] to 0.
+    The attacker could then simply call the withdraw function to obtain their reward
 ** Prevention : 
 ```
 ## 3. Unexpected ethers  🚩🚩🚩
@@ -134,7 +175,7 @@ By designing contracts that neither send ETH nor call untrusted contracts, you p
 -->>  incorrect use of visibility specifiers can lead to some devastating vulnerabilities in smart contracts. 
 The default visibility for functions is public, so functions that do not specify their visibility will be callable by external users.
 The issue arises when developers mistakenly omit visibility specifiers on functions that should be private.
-so, the function visibility must be declared carefully. 
+
 
 
 ** example: 
@@ -187,6 +228,8 @@ contract WalletLibrary is WalletEvents {
 }
 
 ** Prevention :
+so, the function visibility must be declared carefully. 
+====>>  Private functions must not be declared public. 
 
 
 ```
