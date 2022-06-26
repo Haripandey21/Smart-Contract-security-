@@ -307,7 +307,46 @@ so, the function visibility must be declared carefully.
 ## 8. Short Address/Parameters Attack 🚩🚩🚩 
 ```bash 
 ** info : 
+is when a contract receives less data than it was expecting, and Solidity fills the missing bytes with zeros. 
 ** example: 
+contract NonPayloadAttackableToken {
+  modifier onlyPayloadSize(uint size) {
+    assert(msg.data.length == size + 4);
+    _;
+  } 
+
+ function transfer(address _to, uint256 _value) onlyPayloadSize(2 * 32) {
+   // do stuff
+ }   
+} 
+-----------------------------------------
+The transfer function expects two parameters. Each parameter has 32 bytes and the method signature adds 4 bytes to the call.
+The expected total size is 68 bytes.
+it is found that the EVM pads call from this multisignature wallet, making the total 96 bytes instead of the expected 68.
+This multisignature wallet executes transactions in two steps :--->>
+
+An operation is proposed
+It is confirmed and executed
+A simplified multisignature wallet looks like this:
+function propose(address _to, uint _value, bytes _data) public returns (bool _success) {
+   to = _to;
+   value = _value;
+   data = _data;
+
+   return true;
+}
+
+function confirm() returns (bool _success) {
+   if (!to.call.value(value)(data)) {
+     throw;
+   }
+
+   return true;
+}
+-------------------------------------------------------------
+In the proposed method, _data is initially formatted correctly to 68 bytes.
+
+When the final call is made in confirm, it will send 68 bytes to our contract, but Solidity will pad it to 96 bytes. 
 ** Prevention : 
 ```
 ## 9. Unchecked Call Return Values 🚩🚩🚩
